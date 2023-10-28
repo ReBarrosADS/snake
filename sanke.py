@@ -1,5 +1,5 @@
 import pygame   
-import random
+from random import randrange
 
 pygame.init()
 pygame.display.set_caption("Jogo snake Python")
@@ -22,8 +22,8 @@ velocidade_jogo = 15
 
 def gerar_comida():
 
-    comida_x = round(random.randrange(0, largura - tamanho_quadrado) / 20) * 20.0
-    comida_y = round(random.randranger(0, altura - tamanho_quadrado) / 20) * 20.0
+    comida_x = round(randrange(0, largura - tamanho_quadrado) / 20) * 20.0
+    comida_y = round(randrange(0, altura - tamanho_quadrado) / 20) * 20.0
 
     return comida_x, comida_y
 def desenhar_comida(tamanho, comida_x, comida_y):
@@ -36,8 +36,8 @@ def desenhar_cobra(tamanho, pixels):
 
 def desenhar_pontuacao(pontuacao):
     fonte = pygame.font.SysFont("Helvetica", 35) 
-    texto = fonte.render(f"Pontos: {pontuacao}", True, vermelha)
-    
+    texto = fonte.render(f"Pontos: {pontuacao}", True, vermelho)
+
 def rodar_jogo():
     fim_jogo = False
 
@@ -61,27 +61,25 @@ def rodar_jogo():
             if evento.type == pygame.QUIT:
                 fim_jogo = true
         # desenhar comida
-        desenhar_comida(tamanho, comida_x, comida_y)
+        desenhar_comida(tamanho_quadrado, comida_x, comida_y)
         
 
         #desenhar cobra
-        pixels.appned([x, y])
+        pixels.append([x, y])
         if len(pixels) > tamanho_cobra:
             del pixels[0]
 
         #se a cobra bater no propio corpo
         for pixel in pixels:
             if pixel == [x, y]:
-                fim_jogo = True
+                pass
+                # fim_jogo = True
 
-        desenhar_cobra(tamanho, pixels)
-        desenhar_pontuacao(tamanho)
+        desenhar_cobra(tamanho_quadrado, pixels)
+        desenhar_pontuacao(tamanho_quadrado)
 
         # atualização de tela
         pygame.display.update()
 
 
-
-
-
-
+rodar_jogo()
