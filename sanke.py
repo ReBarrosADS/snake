@@ -40,7 +40,24 @@ def desenhar_pontuacao(pontuacao):
     tela.blit(texto, [1, 1])
 
 def selecionar_velocidade(tecla):
-    pass
+    if tecla == pygame.K_DOWN:
+        velocidade_x = 0 
+        velocidade_y = tamanho_quadrado
+    elif tecla == pygame.K_UP:
+        velocidade_x = 0 
+        velocidade_y = -tamanho_quadrado
+    elif tecla == pygame.K_RIGHT:
+        velocidade_x = tamanho_quadrado
+        velocidade_y = 0
+    elif tecla == pygame.K_LEFT:
+        velocidade_x = -tamanho_quadrado
+        velocidade_y = 0
+            
+        
+
+
+    return velocidade_x, velocidade_y    
+
 
 def rodar_jogo():
     fim_jogo = False
@@ -63,10 +80,17 @@ def rodar_jogo():
         
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
-                fim_jogo = true
+                fim_jogo = True
+            elif evento.type == pygame.KEYDOWN:
+                velocidade_x, velocidade_y = selecionar_velocidade(evento.key)    
+       
+       
         # desenhar comida
         desenhar_comida(tamanho_quadrado, comida_x, comida_y)
         
+        #atualizar a posicao da cobra
+        x += velocidade_x
+        y += velocidade_y
 
         #desenhar cobra
         pixels.append([x, y])
@@ -77,9 +101,8 @@ def rodar_jogo():
         for pixel in pixels:
             if pixel == [x, y]:
                 pass
-                # fim_jogo = True
-            elif event.type == pygame.KEYDOWN:
-                velocidade_X, velocidade_y = selecionar_velocidade(evento.key)    
+                #fim_jogo = True
+              
 
         desenhar_cobra(tamanho_quadrado, pixels)
         
@@ -100,4 +123,3 @@ def rodar_jogo():
 
 
 rodar_jogo()
-desenhar_pontuacao()
