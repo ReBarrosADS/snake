@@ -37,6 +37,10 @@ def desenhar_cobra(tamanho, pixels):
 def desenhar_pontuacao(pontuacao):
     fonte = pygame.font.SysFont("Helvetica", 35) 
     texto = fonte.render(f"Pontos: {pontuacao}", True, vermelho)
+    tela.blit(texto, [1, 1])
+
+def selecionar_velocidade(tecla):
+    pass
 
 def rodar_jogo():
     fim_jogo = False
@@ -74,12 +78,26 @@ def rodar_jogo():
             if pixel == [x, y]:
                 pass
                 # fim_jogo = True
+            elif event.type == pygame.KEYDOWN:
+                velocidade_X, velocidade_y = selecionar_velocidade(evento.key)    
 
         desenhar_cobra(tamanho_quadrado, pixels)
-        desenhar_pontuacao(tamanho_quadrado)
+        
+
+        #desenhas pontos
+        desenhar_pontuacao(tamanho_cobra - 1)
+
+        #criar uma nova comida
+        if x == comida_x and y == comida_y:
+            tamanho_cobra += 1
+            comida_x, comida_y = gerar_comida()
+
 
         # atualização de tela
         pygame.display.update()
 
+        relogio.tick(velocidade_jogo)
+
 
 rodar_jogo()
+desenhar_pontuacao()
